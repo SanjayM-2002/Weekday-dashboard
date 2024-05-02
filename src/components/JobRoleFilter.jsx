@@ -1,3 +1,4 @@
+import { TextField } from '@mui/material';
 import React from 'react';
 
 const JobRoleFilter = ({ onChange, filters }) => {
@@ -6,10 +7,11 @@ const JobRoleFilter = ({ onChange, filters }) => {
   };
   return (
     <>
-      <input
-        type='text'
+      <TextField
+        label='Job Role'
+        color='secondary'
+        focused
         onChange={handleJobRoleChange}
-        placeholder='Job Role'
       />
     </>
   );

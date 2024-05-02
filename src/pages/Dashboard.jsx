@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import JobCard from '../components/JobCard';
-import { Box, CircularProgress, Grid } from '@mui/material';
+import { Box, CircularProgress, Grid, Stack } from '@mui/material';
 import { Oval } from 'react-loader-spinner';
 import JobRoleFilter from '../components/JobRoleFilter';
 import LocationFilter from '../components/LocationFilter';
@@ -86,28 +86,40 @@ const Dashboard2 = () => {
 
   return (
     <>
-      {/* <div><JobCard /></div> */}
-      <JobRoleFilter filters={filters} onChange={handleFilterChange} />
-      <LocationFilter filters={filters} onChange={handleFilterChange} />
+      <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignContent: 'center',
+            justifyContent: 'flex-start',
+            marginLeft: 8,
+          }}
+        >
+          <Stack direction={'row'} spacing={6}>
+            <JobRoleFilter filters={filters} onChange={handleFilterChange} />
+            <LocationFilter filters={filters} onChange={handleFilterChange} />
+          </Stack>
+        </Box>
 
-      <Grid container my={4}>
-        {filterJobs(jobData, filters).map((job, index) => (
-          <Grid item key={index} xs={12} sm={12} md={6} lg={4}>
-            <JobCard job={job} />
-          </Grid>
-        ))}
-      </Grid>
+        <Grid container my={4}>
+          {filterJobs(jobData, filters).map((job, index) => (
+            <Grid item key={index} xs={12} sm={12} md={6} lg={4}>
+              <JobCard job={job} />
+            </Grid>
+          ))}
+        </Grid>
 
-      <Box display='flex' justifyContent='center' alignItems='center'>
-        <Oval
-          visible={true}
-          height='80'
-          width='80'
-          color='#4fa94d'
-          ariaLabel='oval-loading'
-          wrapperStyle={{}}
-          wrapperClass=''
-        />
+        <Box display='flex' justifyContent='center' alignItems='center'>
+          <Oval
+            visible={true}
+            height='80'
+            width='80'
+            color='#4fa94d'
+            ariaLabel='oval-loading'
+            wrapperStyle={{}}
+            wrapperClass=''
+          />
+        </Box>
       </Box>
     </>
   );

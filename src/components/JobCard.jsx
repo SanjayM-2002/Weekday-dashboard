@@ -62,7 +62,7 @@ const JobCard = ({ job }) => {
     >
       <Box>
         <Stack mx={2}>
-          <Stack direction={'row'} gap={1}>
+          {/* <Stack direction={'row'} gap={1}>
             <Box
               sx={{
                 borderRadius: 2,
@@ -81,13 +81,13 @@ const JobCard = ({ job }) => {
             >
               10 applicants
             </Box>
-          </Stack>
-          <Stack direction={'row'}>
+          </Stack> */}
+          <Stack direction={'row'} spacing={2}>
             <Box
               component='img'
               sx={{
-                height: 50,
-                width: 40,
+                height: 60,
+                width: 50,
                 maxHeight: { xs: 233, md: 167 },
                 maxWidth: { xs: 350, md: 250 },
                 borderRadius: '50%',
@@ -95,11 +95,41 @@ const JobCard = ({ job }) => {
               src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2'
             />
             <Stack>
-              <Typography variant='body1'>
-                {job.jdUid.slice(0, job.jdUid.indexOf('-'))}
+              <Typography
+                variant='body1'
+                sx={{
+                  color: '#44DF0B',
+                  fontFamily: 'sans-serif',
+                  fontWeight: 700,
+                  fontSize: 16,
+                }}
+              >
+                {job.jdUid
+                  .slice(0, job.jdUid.indexOf('-'))
+                  .charAt(0)
+                  .toUpperCase() +
+                  job.jdUid.slice(0, job.jdUid.indexOf('-')).slice(1)}
               </Typography>
-              <Typography variant='body1'>{job.jobRole}</Typography>
-              <Typography variant='body1'>{job.location}</Typography>
+              <Typography
+                variant='body1'
+                sx={{
+                  fontFamily: 'sans-serif',
+                  fontWeight: 600,
+                  fontSize: 14,
+                }}
+              >
+                {job.jobRole.charAt(0).toUpperCase() + job.jobRole.slice(1)}
+              </Typography>
+              <Typography
+                variant='body1'
+                sx={{
+                  fontFamily: 'sans-serif',
+                  fontWeight: 700,
+                  fontSize: 12,
+                }}
+              >
+                {job.location.charAt(0).toUpperCase() + job.location.slice(1)}
+              </Typography>
             </Stack>
           </Stack>
           <Stack direction={'row'} spacing={1}>
@@ -120,13 +150,28 @@ const JobCard = ({ job }) => {
           <Typography variant='h5'>About Company:</Typography>
           <Typography variant='h6'>About us</Typography>
           <Typography variant='body2'>{job.jobDetailsFromCompany}</Typography>
-          <Button variant='text'>View Job</Button>
+          <Button
+            variant='text'
+            sx={{
+              boxShadow: 1.2,
+            }}
+          >
+            View Job
+          </Button>
           <Typography variant='h6'>Minimum Experience: </Typography>
           <Typography variant='body1'>
             {job.minExp > 0 ? job.minExp : 0} Years
           </Typography>
           <Stack spacing={1}>
-            <Button variant='contained' startIcon={<BoltIcon />}>
+            <Button
+              variant='contained'
+              startIcon={<BoltIcon />}
+              sx={{
+                bgcolor: '#66FFB2',
+                color: 'black',
+                fontWeight: 700,
+              }}
+            >
               Easy Apply
             </Button>
             <Button
