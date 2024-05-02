@@ -2,9 +2,16 @@ import React, { useEffect, useState } from 'react';
 import JobCard from '../components/JobCard';
 import { Box, CircularProgress, Grid } from '@mui/material';
 import { Oval } from 'react-loader-spinner';
+import JobRoleFilter from '../components/JobRoleFilter';
+import LocationFilter from '../components/LocationFilter';
 
-const Dashboard = () => {
+const Dashboard2 = () => {
   const [jobData, setJobData] = useState([]);
+  const [filters, setFilters] = useState({
+    location: '',
+
+    role: '',
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const fetchData = async () => {
@@ -57,17 +64,38 @@ const Dashboard = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [page]);
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const filterJobs = (jobList, filters) => {
+    const filteredByRole = filters.role
+      ? jobList.filter((item) =>
+          item.jobRole.toLowerCase().includes(filters.role.toLowerCase())
+        )
+      : jobList;
+
+    const filteredByLocation = filters.location
+      ? filteredByRole.filter((item) =>
+          item.location.toLowerCase().includes(filters.location.toLowerCase())
+        )
+      : filteredByRole;
+
+    return filteredByLocation;
+  };
 
   return (
     <>
       {/* <div><JobCard /></div> */}
+      <JobRoleFilter filters={filters} onChange={handleFilterChange} />
+      <LocationFilter filters={filters} onChange={handleFilterChange} />
+
       <Grid container my={4}>
-        {jobData.length &&
-          jobData.map((job, index) => (
-            <Grid item key={index} xs={12} sm={12} md={6} lg={4}>
-              <JobCard job={job} />
-            </Grid>
-          ))}
+        {filterJobs(jobData, filters).map((job, index) => (
+          <Grid item key={index} xs={12} sm={12} md={6} lg={4}>
+            <JobCard job={job} />
+          </Grid>
+        ))}
       </Grid>
 
       <Box display='flex' justifyContent='center' alignItems='center'>
@@ -85,4 +113,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Dashboard2;

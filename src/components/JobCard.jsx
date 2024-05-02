@@ -10,6 +10,18 @@ import {
 import React, { useState } from 'react';
 import BoltIcon from '@mui/icons-material/Bolt';
 
+const getCurrencySymbol = (currencyCode) => {
+  switch (currencyCode) {
+    case 'INR':
+      return '₹';
+    case 'USD':
+      return '$';
+
+    default:
+      return '';
+  }
+};
+
 const JobCard = ({ job }) => {
   const [hovered, setHovered] = useState(false);
   //   const [jobData, setJobData] = useState({
@@ -83,7 +95,9 @@ const JobCard = ({ job }) => {
               src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2'
             />
             <Stack>
-              <Typography variant='body1'>{mockData.companyName}</Typography>
+              <Typography variant='body1'>
+                {job.jdUid.slice(0, job.jdUid.indexOf('-'))}
+              </Typography>
               <Typography variant='body1'>{job.jobRole}</Typography>
               <Typography variant='body1'>{job.location}</Typography>
             </Stack>
@@ -91,7 +105,16 @@ const JobCard = ({ job }) => {
           <Stack direction={'row'} spacing={1}>
             <Typography variant='body1'>Estimated Salary: </Typography>
             <Typography variant='body1'>
-              &#8377;{mockData.estimatedSalary} &#x2713;
+              {job.minJdSalary !== null && job.maxJdSalary !== null ? (
+                <>
+                  {job.salaryCurrencyCode
+                    ? getCurrencySymbol(job.salaryCurrencyCode)
+                    : '&#8377;'}
+                  {job.minJdSalary} - {job.maxJdSalary} LPA &#x2713;
+                </>
+              ) : (
+                'Unavailable'
+              )}
             </Typography>
           </Stack>
           <Typography variant='h5'>About Company:</Typography>
