@@ -149,7 +149,9 @@ const JobCard = ({ job }) => {
           </Stack>
           <Typography variant='h5'>About Company:</Typography>
           <Typography variant='h6'>About us</Typography>
-          <Typography variant='body2'>{job.jobDetailsFromCompany}</Typography>
+          <Typography variant='body2'>
+            {job.jobDetailsFromCompany.slice(0, 470)}
+          </Typography>
           <Button
             variant='text'
             sx={{

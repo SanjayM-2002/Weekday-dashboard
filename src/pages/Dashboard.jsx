@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import JobCard from '../components/JobCard';
-import { Box, CircularProgress, Grid, Stack } from '@mui/material';
+import { Box, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import { Oval } from 'react-loader-spinner';
 import JobRoleFilter from '../components/JobRoleFilter';
 import LocationFilter from '../components/LocationFilter';
+import CompanyNameFilter from '../components/CompanyNameFilter';
 
 const Dashboard2 = () => {
   const [jobData, setJobData] = useState([]);
   const [filters, setFilters] = useState({
     location: '',
-
+    companyName: '',
     role: '',
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +82,13 @@ const Dashboard2 = () => {
         )
       : filteredByRole;
 
-    return filteredByLocation;
+    const filteredByCompanyName = filters.companyName
+      ? filteredByLocation.filter((item) =>
+          item.jdUid.toLowerCase().includes(filters.companyName.toLowerCase())
+        )
+      : filteredByLocation;
+
+    return filteredByCompanyName;
   };
 
   return (
@@ -98,16 +105,26 @@ const Dashboard2 = () => {
           <Stack direction={'row'} spacing={6}>
             <JobRoleFilter filters={filters} onChange={handleFilterChange} />
             <LocationFilter filters={filters} onChange={handleFilterChange} />
+            <CompanyNameFilter
+              filters={filters}
+              onChange={handleFilterChange}
+            />
           </Stack>
         </Box>
 
         <Grid container my={4}>
-          {filterJobs(jobData, filters).map((job, index) => (
-            <Grid item key={index} xs={12} sm={12} md={6} lg={4}>
-              <JobCard job={job} />
-            </Grid>
-          ))}
+          {filterJobs(jobData, filters).length > 0 &&
+            filterJobs(jobData, filters).map((job, index) => (
+              <Grid item key={index} xs={12} sm={12} md={6} lg={4}>
+                <JobCard job={job} />
+              </Grid>
+            ))}
         </Grid>
+        {!filterJobs(jobData, filters).length > 0 && (
+          <Box display='flex' justifyContent='center' alignItems='center'>
+            <Typography variant='body1'>No results</Typography>
+          </Box>
+        )}
 
         <Box display='flex' justifyContent='center' alignItems='center'>
           <Oval
