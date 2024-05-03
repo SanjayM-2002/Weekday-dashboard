@@ -19,6 +19,8 @@ npm i
 npm run dev
 ```
 
+## Live Demo
+[Link] (https://weekday-dashboard.vercel.app/)
 
 ## License
 
