@@ -19,6 +19,11 @@ npm i
 npm run dev
 ```
 
+## Features
+* Infinite scroll
+* Filters: Job Role, Location, Company name(first 8 letters of jd uid)
+* Responsiveness: Adapts well to different screen sizes
+
 ## Live Demo
 [Link] (https://weekday-dashboard.vercel.app/)
 
